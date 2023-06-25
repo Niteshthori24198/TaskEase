@@ -1,0 +1,92 @@
+.welcome {
+    margin: auto;
+    color: aqua;
+    letter-spacing: 2px;
+}
+
+h1:hover:hover {
+    color: red;
+    letter-spacing: 7px;
+}
+
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    margin: 125px auto;
+    text-align: center;
+    padding: 25px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 7px;
+}
+
+.login-form input {
+    width: 65%;
+    height: 30px;
+    border-color: none;
+    border: none;
+    margin: 15px auto;
+    outline: none;
+    border-radius: 10px;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+.login-form input:nth-child(3) {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 15px;
+}
+
+.login-form input:nth-child(3):hover {
+    background-color: transparent;
+    color: #007bff;
+    letter-spacing: 1px;
+    border: 1px solid black;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-form>p {
+    color: black;
+}
+
+.login-form a {
+    text-decoration: none;
+    color: #007bff;
+    margin-left: 7px;
+    font-weight: bold;
+}
+
+.login-form a:hover {
+    cursor: pointer;
+    color: green;
+    letter-spacing: 1px;
+}
+
+
+.login-form>button {
+    background-color: #007bff;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 7px 15px;
+    border-radius: 7px;
+    margin: 10px auto;
+}
+
+
+.login-form>button:hover {
+    background-color: transparent;
+    color: #007bff;
+    cursor: pointer;
+    border: 1px solid black;
+    font-weight: bold;
+}
