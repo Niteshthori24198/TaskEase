@@ -1,5 +1,7 @@
 const express = require('express');
 
+require('dotenv').config()
+
 const cors = require('cors');
 
 const { connection } = require("./DB/db");
@@ -23,7 +25,7 @@ app.use(Auth);
 app.use("/todo",todoRouter);
 
 
-app.listen(3000, async ()=>{
+app.listen(process.env.port, async ()=>{
 
     try {
 
