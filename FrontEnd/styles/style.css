@@ -1,0 +1,87 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: white;
+    padding: 5px;
+}
+
+nav img{
+    width: 65px;
+}
+
+nav > div:nth-child(1){
+    width: 10%;
+    margin-left: 50px;
+}
+
+nav > div:nth-child(2){
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 65%;
+    margin: auto;
+    /* border: 2px solid red; */
+   
+}
+
+
+nav > div:nth-child(3){
+    margin-right: 50px;
+    font-size: 20px;
+}
+
+
+nav a{
+    text-decoration: none;
+    color: blue;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+nav a:hover{
+    color: red;
+}
+
+#showUserName{
+    display: none;
+}
+
+.topsection{
+   width: 100%;
+    margin: 5px auto;
+}
+
+.topsection img{
+    width: 100%;
+}
+
+.Myappfooter{
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.Myappfooter p{
+    color: gray;
+    font-size: 15px;
+}
+
+
+
+
