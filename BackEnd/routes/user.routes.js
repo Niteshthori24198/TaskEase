@@ -3,7 +3,7 @@ const { Router } = require('express');
 const userRouter = Router();
 
 
-const { Auth } = require('../midleware/auth.middleware');
+const { Auth } = require('../middleware/auth.middleware');
 
 
 const { UserRegister, UserLogin, UserProfileGet, UserProfileUpdate, UserProfileDelete } = require('../controller/user.controller')

@@ -1,0 +1,61 @@
+.todocont{
+    width: 75%;
+    margin: 50px auto;
+    text-align: center;
+   
+}
+
+.todocont > table{
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+
+.meri-class{
+    border: 1px solid black;
+}
+
+
+
+#meri-id{
+    width: 100%;
+    border-top: 1px solid black;
+}
+
+
+#myheading{
+    color: blue;
+    font-size: 18px;
+}
+
+.searchtodo{
+    display: flex;
+    width: 75%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px auto;
+   
+}
+
+.searchtodo > div:nth-child(1){
+    width: 60%;
+}
+
+
+.searchtodo > div:nth-child(1) > input{
+    width: 50%;
+    height: 35px;
+    border: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#FilterTodo{
+    width: 25%;
+    height: 35px;
+    margin-left: 25px;
+    text-align: center;
+}
