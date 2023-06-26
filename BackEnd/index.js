@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const { connection } = require("./DB/db");
 
-const { Auth } = require('./midleware/auth.middleware');
+const { Auth } = require('./middleware/auth.middleware');
 
 const { userRouter } = require('./routes/user.routes');
 
