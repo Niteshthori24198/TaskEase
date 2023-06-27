@@ -6,7 +6,7 @@ const userRouter = Router();
 const { Auth } = require('../middleware/auth.middleware');
 
 
-const { UserRegister, UserLogin, UserProfileGet, UserProfileUpdate, UserProfileDelete } = require('../controller/user.controller')
+const { UserRegister, UserLogin, UserProfileGet, UserProfileUpdate, UserProfileDelete,googleAuthentication } = require('../controller/user.controller')
 
 
 
@@ -16,6 +16,17 @@ userRouter.post("/register", UserRegister)
 
 
 userRouter.post("/login", UserLogin)
+
+
+// google auth
+
+
+userRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+
+userRouter.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session:false }), googleAuthentication )
+
+
 
 
 // Protected Routes Accessible only after login
