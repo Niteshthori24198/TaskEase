@@ -5,6 +5,7 @@ const userRouter = Router();
 
 const { Auth } = require('../middleware/auth.middleware');
 
+const {passport} = require('../config/gogle')
 
 const { UserRegister, UserLogin, UserProfileGet, UserProfileUpdate, UserProfileDelete,googleAuthentication } = require('../controller/user.controller')
 
