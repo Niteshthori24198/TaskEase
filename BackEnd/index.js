@@ -31,7 +31,7 @@ app.listen(process.env.port, async ()=>{
 
         await connection;
 
-        console.log("connected to DB. Server running at 3000");
+        console.log("connected to DB. Server running!");
 
     } catch (error) {
 
