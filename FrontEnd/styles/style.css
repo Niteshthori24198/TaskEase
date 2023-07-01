@@ -37,11 +37,11 @@ nav > div:nth-child(2){
    
 }
 
-
+/* 
 nav > div:nth-child(3){
     margin-right: 50px;
     font-size: 20px;
-}
+} */
 
 
 nav a{
@@ -75,6 +75,7 @@ nav a:hover{
     text-align: center;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+   
 }
 
 .Myappfooter p{

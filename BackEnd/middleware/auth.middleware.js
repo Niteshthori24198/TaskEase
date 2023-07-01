@@ -2,13 +2,17 @@ require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
 
+const {BlacklistModel} = require('../model/blacklist.model')
 
-const Auth = (req,res,next) =>{
+
+
+const Auth = async (req,res,next) =>{
 
     if(!req.headers['authorization']){
 
         return res.status(400).send({
-            "msg":"Invalid Access."
+            "msg":"Invalid Access.",
+            "result":false
         })
 
     }
@@ -19,6 +23,16 @@ const Auth = (req,res,next) =>{
     if(token){
 
         try {
+
+
+            const isTokenBlacklisted = await BlacklistModel.findOne({token:token})
+
+            if(isTokenBlacklisted){
+                return res.status(400).send({
+                    "error":"Token is BlackListed !!"
+                })
+            }
+
 
             const decoded = jwt.verify(token, process.env.SecretKey);
 
@@ -32,7 +46,7 @@ const Auth = (req,res,next) =>{
     
             else{
     
-                res.status(400).send({
+                return res.status(400).send({
                     "msg":"Kindly Login First"
                 })
     
@@ -40,7 +54,7 @@ const Auth = (req,res,next) =>{
             
         } catch (error) {
 
-            res.status(400).send({
+            return res.status(400).send({
                 "msg":"Invalid Token"
             })
 
@@ -51,7 +65,7 @@ const Auth = (req,res,next) =>{
 
     else{
 
-        res.status(400).send({
+        return res.status(400).send({
             "msg":"Kindly Login First"
         })
 

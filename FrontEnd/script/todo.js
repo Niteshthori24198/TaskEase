@@ -15,7 +15,7 @@ else{
 
     alert("Login Required");
 
-    location.href = "login.html"
+    location.href = "./view/login.html"
 
 }
 
@@ -293,58 +293,58 @@ async function FilterAndSearchTodo(url) {
 
 
 
-let modechange1 = document.querySelector("#modechanger")
+// let modechange1 = document.querySelector("#modechanger")
 
 
-modechange1.addEventListener("click" , (e)=>{
+// modechange1.addEventListener("click" , (e)=>{
 
-    let modeselect = localStorage.getItem("displaymode") || "Light";
+//     let modeselect = localStorage.getItem("displaymode") || "Light";
 
    
-    if(modeselect === "Light"){
+//     if(modeselect === "Light"){
        
-        document.body.style.backgroundColor = 'black'
-        document.body.style.color='white'
-        document.querySelector('nav').style.backgroundColor='black'
-        document.querySelector("#modechanger").style.color='aqua'
+//         document.body.style.backgroundColor = 'black'
+//         document.body.style.color='white'
+//         document.querySelector('nav').style.backgroundColor='black'
+//         document.querySelector("#modechanger").style.color='aqua'
        
-        let tablehead = document.querySelectorAll('.todocont th , .todocont td , .todocont > table');
+//         let tablehead = document.querySelectorAll('.todocont th , .todocont td , .todocont > table');
 
-        for(let i of tablehead){
+//         for(let i of tablehead){
 
-            i.style.borderColor='white'
-        }
+//             i.style.borderColor='white'
+//         }
 
-        document.querySelector('#editTodo').style.color = 'aqua'
-        document.querySelector('#createTodo').style.color = 'aqua'
+//         document.querySelector('#editTodo').style.color = 'aqua'
+//         document.querySelector('#createTodo').style.color = 'aqua'
 
 
 
-        localStorage.setItem("displaymode","Dark");
-    }
-    else{
+//         localStorage.setItem("displaymode","Dark");
+//     }
+//     else{
        
         
-        document.body.style.backgroundColor = 'white'
-        document.body.style.color='black'
-        document.querySelector('nav').style.backgroundColor='whitesmoke'
-        document.querySelector("#modechanger").style.color='black'
-        let tablehead = document.querySelectorAll('.todocont th , .todocont td , .todocont > table');
-        for(let i of tablehead){
+//         document.body.style.backgroundColor = 'white'
+//         document.body.style.color='black'
+//         document.querySelector('nav').style.backgroundColor='whitesmoke'
+//         document.querySelector("#modechanger").style.color='black'
+//         let tablehead = document.querySelectorAll('.todocont th , .todocont td , .todocont > table');
+//         for(let i of tablehead){
 
-            i.style.borderColor='black'
-        }
+//             i.style.borderColor='black'
+//         }
 
-        document.querySelector('#editTodo').style.color = 'black'
-        document.querySelector('#createTodo').style.color = 'black'
+//         document.querySelector('#editTodo').style.color = 'black'
+//         document.querySelector('#createTodo').style.color = 'black'
 
 
-        localStorage.setItem("displaymode","Light");
+//         localStorage.setItem("displaymode","Light");
       
      
-    }
+//     }
 
-})
+// })
 
 
 
