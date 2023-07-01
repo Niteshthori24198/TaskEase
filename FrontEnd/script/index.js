@@ -36,6 +36,11 @@ if (usertoken) {
 
 }
 
+else{
+
+    location.href = "./view/login.html"
+}
+
 
 async function fetchUserDetails() {
 
@@ -47,19 +52,21 @@ async function fetchUserDetails() {
 
             headers: {
 
-                "Content-type": "application/json",
+                "content-type": "application/json",
 
-                "Authorization": `Bearer ${usertoken}`
+                "authorization": `Bearer ${usertoken}`
 
             }
 
-        });
+        }).then((res)=>res.json());
+
+        console.log("===>", res)
 
         if (res.ok) {
 
-            res = await res.json();
+            res = await res;
 
-            loggedInUser = res;
+            loggedInUser = res.user;
 
             renderUserName();
 
@@ -80,6 +87,8 @@ async function fetchUserDetails() {
     }
 
     catch (error) {
+
+        console.log("==> catch run")
 
         localStorage.removeItem('usertoken');
 
@@ -113,61 +122,123 @@ function renderUserName() {
 }
 
 
+showUserName.addEventListener("click", ()=>{
 
-signin_up_button.addEventListener('click', () => {
+    if(showUserName.innerHTML){
+        location.href='profile.html'
+    }
+
+
+})
+
+
+
+signin_up_button.addEventListener('click', async() => {
 
     if (signin_up_button.innerHTML === 'Logout') {
 
-        localStorage.removeItem('usertoken');
+        if (confirm('Are you sure you want to log out?')) {
 
-        location.reload();
-    }
+            const userLogOut = await userLogedOutHandle()
 
-})
+            if (userLogOut) {
 
+                localStorage.removeItem('usertoken');
 
+                alert('Logout Successfull !')
 
-/* dark mode */
+                location.reload();
+            }
 
+            else {
+                alert('Something Went Wrong !!')
+            }
 
-
-let modechange = document.querySelector("#modechanger")
-console.log(modechange)
-
-modechange.addEventListener("click", (e) => {
-
-    let modeselect = localStorage.getItem("displaymode") || "Light";
-
-
-    if (modeselect === "Light") {
-
-        document.body.style.backgroundColor = 'black'
-        document.body.style.color = 'white'
-        document.querySelector('nav').style.backgroundColor = 'black'
-        document.querySelector("#modechanger").style.color = 'aqua'
-        document.querySelector('.Myappfooter').style.borderColor = 'white'
-
-        document.getElementById("myemail").style.color = 'aqua'
-        document.getElementById("myname").style.color = 'aqua'
-
-        localStorage.setItem("displaymode", "Dark");
-
-    }
-    else {
-
-
-        document.body.style.backgroundColor = 'white'
-        document.body.style.color = 'black'
-        document.querySelector('nav').style.backgroundColor = 'white'
-        document.querySelector("#modechanger").style.color = 'black'
-        document.querySelector('.Myappfooter').style.borderColor = 'black'
-
-        document.getElementById("myemail").style.color = 'black'
-        document.getElementById("myname").style.color = 'black'
-
-        localStorage.setItem("displaymode", "Light");
-
+        }
 
     }
 
 })
+
+
+
+
+
+
+
+async function userLogedOutHandle(){
+
+    let userloggedout=false;
+
+    const Response = await fetch(`${BASEURL}/user/logout`,{
+        method:'GET',
+        headers:{
+            'content-type':'application/json',
+            'authorization':`Bearer ${usertoken}`
+        }
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+
+    const data = await Response
+
+    if(data.Success){
+        userloggedout=true
+    }
+    else{
+        userloggedout=data.Success;
+    }
+
+    return userloggedout
+
+}
+
+
+
+
+
+// let modechange = document.querySelector("#modechanger")
+// console.log(modechange)
+
+// modechange.addEventListener("click", (e) => {
+
+//     let modeselect = localStorage.getItem("displaymode") || "Light";
+
+
+//     if (modeselect === "Light") {
+
+//         document.body.style.backgroundColor = 'black'
+//         document.body.style.color = 'white'
+//         document.querySelector('nav').style.backgroundColor = 'black'
+//         document.querySelector("#modechanger").style.color = 'aqua'
+//         document.querySelector('.Myappfooter').style.borderColor = 'white'
+
+//         document.getElementById("myemail").style.color = 'aqua'
+//         document.getElementById("myname").style.color = 'aqua'
+
+//         localStorage.setItem("displaymode", "Dark");
+
+//     }
+//     else {
+
+
+//         document.body.style.backgroundColor = 'white'
+//         document.body.style.color = 'black'
+//         document.querySelector('nav').style.backgroundColor = 'white'
+//         document.querySelector("#modechanger").style.color = 'black'
+//         document.querySelector('.Myappfooter').style.borderColor = 'black'
+
+//         document.getElementById("myemail").style.color = 'black'
+//         document.getElementById("myname").style.color = 'black'
+
+//         localStorage.setItem("displaymode", "Light");
+
+
+//     }
+
+// })
