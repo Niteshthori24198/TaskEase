@@ -36,10 +36,7 @@ if (usertoken) {
 
 }
 
-else{
 
-    location.href = "./view/login.html"
-}
 
 
 async function fetchUserDetails() {
@@ -58,7 +55,7 @@ async function fetchUserDetails() {
 
             }
 
-        }).then((res)=>res.json());
+        }).then((res) => res.json());
 
         console.log("===>", res)
 
@@ -79,7 +76,7 @@ async function fetchUserDetails() {
 
             alert('Login Required');
 
-            location.reload();
+            // location.reload();
 
         }
 
@@ -96,7 +93,7 @@ async function fetchUserDetails() {
 
         console.log(error)
 
-        location.reload();
+        // location.reload();
 
     }
 }
@@ -122,38 +119,24 @@ function renderUserName() {
 }
 
 
-showUserName.addEventListener("click", ()=>{
-
-    if(showUserName.innerHTML){
-        location.href='profile.html'
-    }
-
-
-})
 
 
 
-signin_up_button.addEventListener('click', async() => {
+
+signin_up_button.addEventListener('click', async (e) => {
+
 
     if (signin_up_button.innerHTML === 'Logout') {
 
         if (confirm('Are you sure you want to log out?')) {
 
-            const userLogOut = await userLogedOutHandle()
+            e.preventDefault()
 
-            if (userLogOut) {
+            await userLogedOutHandle()
 
-                localStorage.removeItem('usertoken');
-
-                alert('Logout Successfull !')
-
-                location.reload();
-            }
-
-            else {
-                alert('Something Went Wrong !!')
-            }
-
+        }
+        else {
+            e.preventDefault()
         }
 
     }
@@ -166,35 +149,35 @@ signin_up_button.addEventListener('click', async() => {
 
 
 
-async function userLogedOutHandle(){
+async function userLogedOutHandle() {
 
-    let userloggedout=false;
 
-    const Response = await fetch(`${BASEURL}/user/logout`,{
-        method:'GET',
-        headers:{
-            'content-type':'application/json',
-            'authorization':`Bearer ${usertoken}`
+    const Response = await fetch(`${BASEURL}/user/logout`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${usertoken}`
         }
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 
 
     const data = await Response
 
-    if(data.Success){
-        userloggedout=true
+    if (data.Success) {
+       alert(data.msg);
+       localStorage.removeItem('usertoken');
+       location.href='login.html'
     }
-    else{
-        userloggedout=data.Success;
+    else {
+        alert(data.msg)
     }
 
-    return userloggedout
 
 }
 
@@ -202,43 +185,3 @@ async function userLogedOutHandle(){
 
 
 
-// let modechange = document.querySelector("#modechanger")
-// console.log(modechange)
-
-// modechange.addEventListener("click", (e) => {
-
-//     let modeselect = localStorage.getItem("displaymode") || "Light";
-
-
-//     if (modeselect === "Light") {
-
-//         document.body.style.backgroundColor = 'black'
-//         document.body.style.color = 'white'
-//         document.querySelector('nav').style.backgroundColor = 'black'
-//         document.querySelector("#modechanger").style.color = 'aqua'
-//         document.querySelector('.Myappfooter').style.borderColor = 'white'
-
-//         document.getElementById("myemail").style.color = 'aqua'
-//         document.getElementById("myname").style.color = 'aqua'
-
-//         localStorage.setItem("displaymode", "Dark");
-
-//     }
-//     else {
-
-
-//         document.body.style.backgroundColor = 'white'
-//         document.body.style.color = 'black'
-//         document.querySelector('nav').style.backgroundColor = 'white'
-//         document.querySelector("#modechanger").style.color = 'black'
-//         document.querySelector('.Myappfooter').style.borderColor = 'black'
-
-//         document.getElementById("myemail").style.color = 'black'
-//         document.getElementById("myname").style.color = 'black'
-
-//         localStorage.setItem("displaymode", "Light");
-
-
-//     }
-
-// })
