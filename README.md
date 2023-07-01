@@ -4,7 +4,6 @@
 
 ![image](https://github.com/Niteshthori24198/TaskEase/assets/62844049/0e00afcb-e114-4221-9694-f1b9966e88b5)
 
-
 # Task-Ease
   This is a web application that empowers users to effortlessly manage their daily tasks and routines. With its intuitive interface and    comprehensive end-to-end functionality, This app enables users to streamline their workflow, stay organized, and achieve their goals     with ease.
 
@@ -49,8 +48,7 @@
 
   ## Task Management Page
 
-  The task management page enables users to create new tasks, update their status, delete tasks, and utilize search and filter         
-  functionalities.
+  The task management page enables users to create new tasks, update their status, delete tasks, and utilize search and filter    functionalities.
 
   ![image](https://github.com/Niteshthori24198/TaskEase/assets/62844049/3664996c-c448-4e00-a947-180dae5b5616)
 
