@@ -10,7 +10,7 @@ const { TodoModel } = require('../model/todo.model');
 
 const { UserModel } = require("../model/user.model");
 
-const BlacklistModel = require('../model/blacklist.model');
+const {BlacklistModel} = require('../model/blacklist.model');
 
 
 
@@ -241,11 +241,13 @@ const UserLogout = async (req, res) => {
 
     const token = authToken.trim().split(' ')[1];
 
+    // console.log("token mila ==> logout ",token)
+
     try {
 
         const decoded = jwt.verify(token,process.env.SecretKey)
 
-        // console.log(decoded);
+        // console.log("===> decode",decoded);
 
         const newBlacklistToken = new BlacklistModel({ token: token })
 
