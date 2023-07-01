@@ -7,7 +7,7 @@ const { Auth } = require('../middleware/auth.middleware');
 
 const {passport} = require('../config/gogle')
 
-const { UserRegister, UserLogin, UserProfileGet, UserProfileUpdate, UserProfileDelete,googleAuthentication } = require('../controller/user.controller')
+const { UserRegister, UserLogin, UserLogout,UserProfileGet, UserProfileUpdate, UserProfileDelete,googleAuthentication } = require('../controller/user.controller')
 
 
 
@@ -17,6 +17,9 @@ userRouter.post("/register", UserRegister)
 
 
 userRouter.post("/login", UserLogin)
+
+
+userRouter.get("/logout", Auth, UserLogout)
 
 
 // google auth

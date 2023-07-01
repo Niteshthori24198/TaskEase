@@ -10,6 +10,7 @@ const { TodoModel } = require('../model/todo.model');
 
 const { UserModel } = require("../model/user.model");
 
+const BlacklistModel = require('../model/blacklist.model');
 
 
 
@@ -28,7 +29,7 @@ const UserRegister = async (req, res) => {
 
             await user.save()
 
-            res.status(200).send({
+            return res.status(200).send({
                 "msg": "New User has been Registered Successfully !",
                 "User": user
             })
@@ -37,7 +38,7 @@ const UserRegister = async (req, res) => {
         }
         catch (error) {
 
-            res.status(400).send({ "error": error.message })
+            return res.status(400).send({ "error": error.message })
 
         }
 
@@ -65,14 +66,14 @@ const UserLogin = async (req, res) => {
 
                 if (!result) {
 
-                    res.status(400).send({
+                    return res.status(400).send({
                         "msg": "Invaid Password"
                     })
 
                 }
                 else {
 
-                    res.status(200).send({
+                    return res.status(200).send({
 
                         "msg": "Login Successfull",
 
@@ -88,7 +89,7 @@ const UserLogin = async (req, res) => {
 
         else {
 
-            res.status(400).send({
+            return res.status(400).send({
                 "msg": "Kindly Register First to Access Service."
             })
 
@@ -96,7 +97,7 @@ const UserLogin = async (req, res) => {
 
     } catch (error) {
 
-        res.status(400).send({
+        return res.status(400).send({
             "msg": error.message
         })
 
@@ -118,11 +119,11 @@ const UserProfileGet = async (req, res) => {
 
         if (user) {
 
-            res.status(200).send(user);
+            return res.status(200).send({ok:true,user:user});
 
         } else {
 
-            res.status(404).send({ "msg": "User Not Found" })
+            return res.status(404).send({ "msg": "User Not Found" })
 
         }
 
@@ -130,7 +131,7 @@ const UserProfileGet = async (req, res) => {
 
     catch (error) {
 
-        res.status(400).send(
+        return res.status(400).send(
             { "error": error.message }
         )
 
@@ -144,32 +145,35 @@ const UserProfileUpdate = async (req, res) => {
 
     const { UserID } = req.body;
 
+    console.log("==> body mili",req.body)
+
     try {
 
         const verifyUser = await UserModel.findOne({ _id: UserID });
 
         if (verifyUser) {
 
-            await UserModel.findByIdAndUpdate({ _id: UserID }, req.body);
+            await UserModel.findByIdAndUpdate({ _id: UserID }, {...req.body});
 
             const user = await UserModel.findOne({ _id: UserID });
 
 
-            res.status(200).send({
+            return res.status(200).send({
                 "msg": "User Data Has been Updated Successfully.",
-                "User": user
+                "user": user,
+                "Success":true
             });
 
         } else {
 
-            res.status(404).send('User Not Found');
+            return res.status(404).send('User Not Found');
 
         }
 
     }
     catch (error) {
 
-        res.status(400).send({ "error": error.message })
+        return res.status(400).send({ "error": error.message })
 
     }
 }
@@ -192,7 +196,7 @@ const UserProfileDelete = async (req, res) => {
 
             await TodoModel.deleteMany({ UserID });
 
-            res.status(200).send({
+            return res.status(200).send({
 
                 "msg": `${UserID} user has been deleted successfully.`
 
@@ -201,7 +205,7 @@ const UserProfileDelete = async (req, res) => {
         }
         else {
 
-            res.status(404).send({
+            return res.status(404).send({
                 "msg": "User doesn't exists"
             });
 
@@ -211,10 +215,71 @@ const UserProfileDelete = async (req, res) => {
 
     catch (error) {
 
-        res.status(400).send({ "error": error.message })
+        return res.status(400).send({ "error": error.message })
 
     }
 }
+
+
+
+
+const UserLogout = async (req, res) => {
+
+    const authToken = req.headers['authorization'];
+
+    if (!authToken) {
+        return res.status(400).send({
+
+            "msg": "Token Not Found.",
+
+            "error": "Token Not Found.",
+
+            "Success": false
+
+        })
+    }
+
+    const token = authToken.trim().split(' ')[1];
+
+    try {
+
+        const decoded = jwt.verify(token,process.env.SecretKey)
+
+        // console.log(decoded);
+
+        const newBlacklistToken = new BlacklistModel({ token: token })
+
+        await newBlacklistToken.save()
+
+        return res.status(200).send({
+
+            "error": "no error",
+
+            "Success": true,
+
+            "msg": "Logout Successfull."
+        })
+
+
+    }
+
+    catch (error) {
+
+        return res.status(400).send({
+
+            "error": error.message,
+
+            "msg": "Something Wrong with the Token passed",
+
+            "Success": false,
+
+
+        })
+
+    }
+}
+
+
 
 
 
@@ -262,6 +327,7 @@ module.exports = {
 
     UserRegister,
     UserLogin,
+    UserLogout,
     UserProfileGet,
     UserProfileUpdate,
     UserProfileDelete,

@@ -12,12 +12,12 @@ const AddTodoTask = async (req,res)=>{
 
         await todo.save();
 
-        res.status(200).send(todo)
+        return res.status(200).send(todo)
 
 
     } catch (error) {
         
-        res.status(400).send({
+        return res.status(400).send({
             "msg":error.message
 
         })
@@ -43,7 +43,7 @@ const SeachTodoTask = async (req,res)=>{
 
             const todo = await TodoModel.find({UserID , TaskName , isCompleted}).skip(Limit*(Page-1)).limit(Limit);
 
-            res.status(200).send(todo)
+            return res.status(200).send(todo)
 
         }
 
@@ -51,7 +51,7 @@ const SeachTodoTask = async (req,res)=>{
 
             const todo = await TodoModel.find({UserID ,TaskName}).skip(Limit*(Page-1)).limit(Limit);
 
-            res.status(200).send(todo);
+            return res.status(200).send(todo);
 
         }
         
@@ -59,7 +59,7 @@ const SeachTodoTask = async (req,res)=>{
     } 
     catch (error) {
         
-        res.status(400).send({
+        return res.status(400).send({
             "msg":error.message
 
         })
@@ -86,17 +86,17 @@ const GetOneTodoTask = async (req,res)=>{
 
             const todo = await TodoModel.findById({_id:todoID});
 
-            res.status(200).send(todo);
+            return res.status(200).send(todo);
 
         }else{
 
-            res.status(400).send({"msg":"You can't able to get todo of other user"});
+            return res.status(400).send({"msg":"You can't able to get todo of other user"});
             
         }
 
     } catch (error) {
 
-        res.status(400).send({"error":error.message});  
+        return res.status(400).send({"error":error.message});  
         
     } 
 
@@ -121,7 +121,7 @@ const UpdateTodoTask = async(req,res)=>{
 
             const todo1 = await TodoModel.findById({_id:todoID});
 
-            res.status(200).send({
+            return res.status(200).send({
 
                 "msg": `todo ${todo1} has been updated.`
             }
@@ -131,7 +131,7 @@ const UpdateTodoTask = async(req,res)=>{
 
         else{
 
-            res.status(400).send({
+            return res.status(400).send({
                 "msg":"Unauthorized acess detected. Acees Denied"
             })
 
@@ -141,7 +141,7 @@ const UpdateTodoTask = async(req,res)=>{
     
     catch (error) {
         
-        res.status(400).send({
+        return res.status(400).send({
             "msg":error.message
 
         })
@@ -166,14 +166,14 @@ const DeleteTodo =  async(req,res)=>{
 
             await TodoModel.findByIdAndDelete({_id:todoID});
     
-            res.status(200).send({
+            return res.status(200).send({
                 "msg":"Todo has been deleted."
             });
         }
 
         else{
 
-            res.status(400).send({
+            return res.status(400).send({
                 "msg":"Unauthorized acess detected. Acees Denied"
             })
 
@@ -183,7 +183,7 @@ const DeleteTodo =  async(req,res)=>{
     
     catch (error) {
         
-        res.status(400).send({
+        return res.status(400).send({
             "msg":error.message
 
         })
