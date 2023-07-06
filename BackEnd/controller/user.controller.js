@@ -145,7 +145,6 @@ const UserProfileUpdate = async (req, res) => {
 
     const { UserID } = req.body;
 
-    console.log("==> body mili",req.body)
 
     try {
 
@@ -241,13 +240,10 @@ const UserLogout = async (req, res) => {
 
     const token = authToken.trim().split(' ')[1];
 
-    // console.log("token mila ==> logout ",token)
 
     try {
 
         const decoded = jwt.verify(token,process.env.SecretKey)
-
-        // console.log("===> decode",decoded);
 
         const newBlacklistToken = new BlacklistModel({ token: token })
 
