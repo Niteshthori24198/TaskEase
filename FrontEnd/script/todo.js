@@ -13,9 +13,11 @@ if(token){
 
 else{
 
+    document.body.innerHTML=''
+
     alert("Login Required");
 
-    location.href = "./view/login.html"
+    location.href = "login.html"
 
 }
 
@@ -200,7 +202,7 @@ creatTodoForm.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    if (!creatTodoForm.c_taskName.value && !creatTodoForm.c_status.value) {
+    if (!creatTodoForm.c_taskName.value) {
 
         alert('Please fill all required detail')
         return
@@ -209,7 +211,7 @@ creatTodoForm.addEventListener('submit', (e) => {
     let payload = {
 
         TaskName: creatTodoForm.c_taskName.value,
-        isCompleted: creatTodoForm.c_status.value
+        isCompleted: false
 
     }
 
