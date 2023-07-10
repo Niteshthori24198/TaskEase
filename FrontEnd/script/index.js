@@ -74,9 +74,8 @@ async function fetchUserDetails() {
 
             localStorage.removeItem('usertoken');
 
-            alert('Login Required');
+            Swal.fire('Login Required', '', 'warning')
 
-            // location.reload();
 
         }
 
@@ -89,11 +88,8 @@ async function fetchUserDetails() {
 
         localStorage.removeItem('usertoken');
 
-        alert('Login Required');
+        Swal.fire(error.message, '', 'error')
 
-        console.log(error)
-
-        // location.reload();
 
     }
 }
@@ -128,16 +124,9 @@ signin_up_button.addEventListener('click', async (e) => {
 
     if (signin_up_button.innerHTML === 'Logout') {
 
-        if (confirm('Are you sure you want to log out?')) {
+        e.preventDefault()
 
-            e.preventDefault()
-
-            await userLogedOutHandle()
-
-        }
-        else {
-            e.preventDefault()
-        }
+        await userLogedOutHandle()
 
     }
 
@@ -152,31 +141,65 @@ signin_up_button.addEventListener('click', async (e) => {
 async function userLogedOutHandle() {
 
 
-    const Response = await fetch(`${BASEURL}/user/logout`, {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${usertoken}`
+    Swal.fire({
+
+        title: 'Are you sure you want to log out?',
+        showCancelButton: true,
+        confirmButtonText: 'Logout'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            userLogoutIntiate()
         }
     })
-        .then((res) => {
-            return res.json()
+
+
+    async function userLogoutIntiate() {
+
+        const Response = await fetch(`${BASEURL}/user/logout`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${usertoken}`
+            }
         })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((res) => {
+                return res.json()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
 
 
-    const data = await Response
+        const data = await Response
 
-    if (data.Success) {
-       alert(data.msg);
-       localStorage.removeItem('usertoken');
-       location.href='login.html'
+        if (data.Success) {
+
+            Swal.fire({
+
+                title: data.msg,
+                icon: 'success',
+                confirmButtonText: 'Ok'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    localStorage.removeItem('usertoken');
+                    location.href = 'login.html'
+                }
+
+            })
+
+        }
+        else {
+            Swal.fire(data.msg, '', 'error')
+        }
     }
-    else {
-        alert(data.msg)
-    }
+
+
 
 
 }

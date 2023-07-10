@@ -52,23 +52,39 @@ function LoginNewUser(user){
 
         if(data.token){
 
-            localStorage.setItem("usertoken",data.token);
 
-            alert("Login Successfull")
+            Swal.fire({
 
-            location.href = "../index.html" 
+                title: "Login Successfull ✌",
+                icon:'success',
+
+                confirmButtonText: 'Ok'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    localStorage.setItem("usertoken", data.token);
+
+                    location.href = "../index.html"
+                }
+
+            })
+
         }
 
         else{
 
-            alert("Oops ! Wrong Password ")
+            Swal.fire('Wrong Password !', '', 'warning')
+
 
         }
 
     })
     .catch((err)=>{
 
-        alert("Login Failed")
+        Swal.fire('Login Failed.', '', 'error')
+
         
     })
    
