@@ -25,6 +25,11 @@ app.use(Auth);
 app.use("/todo",todoRouter);
 
 
+app.get('/',(req,res)=>{
+    res.send("Welcome To TaskEase.")
+})
+
+
 app.listen(process.env.port, async ()=>{
 
     try {
