@@ -82,15 +82,23 @@ userdataeditbtn.addEventListener("click", () => {
     }
 
 
-    if (confirm('Do you Want to Update Your Profile ?')) {
+    Swal.fire({
 
-        UpdateUserInfo(userpayload)
+        title: 'Do you Want to Update Your Profile ?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText:'No'
 
-    }
+    }).then((result) => {
 
-    else{
-        location.reload()
-    }
+        if (result.isConfirmed) {
+
+            UpdateUserInfo(userpayload)
+        }
+        else{
+            FetchUserInformation()
+        }
+    })
 
 })
 
@@ -119,10 +127,10 @@ function UpdateUserInfo(userpayload) {
             userdataeditbtn.disabled = false;
             if (data.Success) {
                 
-                location.reload()
+               location.reload()
             }
             else {
-               location.reload()
+                location.reload()
             }
 
         })

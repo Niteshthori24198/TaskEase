@@ -10,7 +10,7 @@ registerForm.addEventListener('submit',(e)=> {
 
     if(registerForm.new_user_conf_pass.value !== registerForm.new_user_pass.value){
 
-        alert('Password Not Matched');
+        Swal.fire('Password Mismatch', '', 'warning')
 
     }else{
         
@@ -65,15 +65,29 @@ const AddUserToDB = async (payload) => {
 
             res = await res.json();
 
-            alert('Your Account has been created Successfully .');
 
-            location.href = 'login.html';
+
+            Swal.fire({
+
+                title: "Your Account has been created Successfully",
+                icon:'success',
+
+                confirmButtonText: 'Ok'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    location.href = 'login.html';
+                }
+
+            })
 
         }
         
         else{
 
-            alert('Oops ! Something went wrong. Please enter your details correctly.');
+            swal.fire('Oops ! Something went wrong. Please enter your details correctly.','','error');
 
         }
         
@@ -82,7 +96,7 @@ const AddUserToDB = async (payload) => {
     
     catch (error) {
 
-        alert('Something went wrong');
+        Swal.fire(error.message, '', 'error')
 
     }
 

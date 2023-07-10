@@ -3,59 +3,74 @@ const BaseURL = `http://localhost:4040`
 
 let todotablebody = document.querySelector("tbody");
 
-const token  = localStorage.getItem("usertoken") || null;
+const token = localStorage.getItem("usertoken") || null;
 
-if(token){
+if (token) {
 
     DisplayTodo()
 
 }
 
-else{
+else {
 
-    document.body.innerHTML=''
+    document.body.innerHTML = ''
 
-    alert("Login Required");
 
-    location.href = "login.html"
+    Swal.fire({
+
+        title: 'Kindly Login First to Access this section.',
+
+        icon: 'error',
+
+        confirmButtonText: 'Ok'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            location.href = "login.html"
+        }
+
+    })
+
 
 }
 
 
-function DisplayTodo(){
+function DisplayTodo() {
 
 
-    fetch(`${BaseURL}/todo/get`,{
-        
-        method:'GET',
-        headers:{
-            'content-type':'application/json',
-            'authorization' : `Bearer ${token}`
+    fetch(`${BaseURL}/todo/get`, {
+
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${token}`
         }
     })
-    .then((res)=>{
-        return res.json()
-    })
-    .then((data)=>{
+        .then((res) => {
+            return res.json()
+        })
+        .then((data) => {
 
-        console.log(data)
+            console.log(data)
 
-        RenderTODO(data)
-    })
-    .catch((err)=>{
+            RenderTODO(data)
+        })
+        .catch((error) => {
 
-        console.log(err);
-        alert("Something Went Wrong")
-    })
+            Swal.fire(error.message, '', 'error')
+
+        })
 
 }
 
 
-function RenderTODO(data){
+function RenderTODO(data) {
 
-    todotablebody.innerHTML=''
+    todotablebody.innerHTML = ''
 
-    const todos = data.map((todo)=>{
+    const todos = data.map((todo) => {
         return getTodorow(todo)
     }).join('')
 
@@ -64,9 +79,9 @@ function RenderTODO(data){
 }
 
 
-function getTodorow(row){
+function getTodorow(row) {
 
-        return `<tr>
+    return `<tr>
                 <td  class="meri-class">${row._id}</td>
                 <td  class="meri-class">${row.TaskName}</td>
                 <td  class="meri-class">${row.isCompleted ? "Completed" : "Pending"}</td>
@@ -113,21 +128,23 @@ editTodoForm.addEventListener('submit', (e) => {
 
             if (data.error) {
 
-                alert(data.error)
+                Swal.fire(data.error, '', 'error')
 
-            } 
+            }
             else {
 
-                alert('Todo has been updated Successfully.')
 
-                location.reload()
+                Swal.fire('Todo has been updated Successfully.', '', 'success')
+
+                DisplayTodo()
             }
 
         })
 
-        .catch((err) => {
+        .catch((error) => {
 
-            alert('Something went wrong')
+            Swal.fire(error.message, '', 'error')
+
         })
 
 })
@@ -138,7 +155,7 @@ editTodoForm.addEventListener('submit', (e) => {
 
 
 
-function EditRow(id){
+function EditRow(id) {
 
     fetch(`${BaseURL}/todo/getone/${id}`, {
         method: "GET",
@@ -156,8 +173,8 @@ function EditRow(id){
             editTodoForm.e_status.value = data.isCompleted;
 
         })
-        .catch((err) => {
-            alert('Something went wrong')
+        .catch((error) => {
+            Swal.fire(error.message, '', 'error')
         })
 
 
@@ -165,28 +182,50 @@ function EditRow(id){
 
 
 
-function DeleteRow(id){
+function DeleteRow(id) {
 
-    fetch(`${BaseURL}/todo/delete/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-type": "application/json",
-            "Authorization": `Bearer ${token}`
+    Swal.fire({
+
+        title: 'Are you sure that you Want to Delete Your Todo ?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            removeTodotask()
         }
+
     })
-        .then((res) => res.json())
-        .then((data) => {
 
-            console.log(data);
 
-            alert("Todo has been Deleted Successfully")
-
-            location.reload()
-
+    function removeTodotask() {
+        fetch(`${BaseURL}/todo/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
         })
-        .catch((err) => {
-            alert('Something went wrong')
-        })
+            .then((res) => res.json())
+            .then((data) => {
+
+                console.log(data);
+
+                Swal.fire('Todo has been Deleted Successfully', '', 'success')
+
+                DisplayTodo()
+
+            })
+            .catch((error) => {
+                Swal.fire(error.message, '', 'error')
+            })
+    }
+
+
+
 
 }
 
@@ -204,7 +243,8 @@ creatTodoForm.addEventListener('submit', (e) => {
 
     if (!creatTodoForm.c_taskName.value) {
 
-        alert('Please fill all required detail')
+        Swal.fire('Please fill all required detail', '', 'warning')
+
         return
     }
 
@@ -228,14 +268,15 @@ creatTodoForm.addEventListener('submit', (e) => {
 
         .then((data) => {
 
-            alert('Todo has been Successfully Created')
-            location.reload()
+            Swal.fire('Todo has been Successfully Created', '', 'success')
+
+            DisplayTodo()
 
         })
 
-        .catch((err) => {
+        .catch((error) => {
 
-            alert('Something went wrong')
+            Swal.fire(error.message, '', 'error')
 
         })
 
@@ -256,8 +297,8 @@ todotaskFilter.addEventListener('change', TaskfilterFunc);
 todotaskSearch.addEventListener('input', TaskfilterFunc);
 
 
-function TaskfilterFunc(){
-    
+function TaskfilterFunc() {
+
     let url = `${BaseURL}/todo/get?TaskName=${todotaskSearch.value}&isCompleted=${todotaskFilter.value}`
 
     FilterAndSearchTodo(url)
@@ -282,10 +323,10 @@ async function FilterAndSearchTodo(url) {
 
         RenderTODO(res);
 
-    } 
+    }
     else {
 
-        alert('Please LogIn First.')
+        Swal.fire('Please Login First !', '', 'error')
     }
 }
 
