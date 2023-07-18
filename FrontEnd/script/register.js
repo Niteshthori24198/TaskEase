@@ -4,16 +4,16 @@ const BaseURL = `https://task-ease-niteshthori24198.vercel.app`
 let registerForm = document.getElementById('registeruser');
 
 
-registerForm.addEventListener('submit',(e)=> {
+registerForm.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    if(registerForm.new_user_conf_pass.value !== registerForm.new_user_pass.value){
+    if (registerForm.new_user_conf_pass.value !== registerForm.new_user_pass.value) {
 
         Swal.fire('Password Mismatch', '', 'warning')
 
-    }else{
-        
+    } else {
+
         registerUser();
 
     }
@@ -36,67 +36,61 @@ const registerUser = () => {
 
     console.log(payload);
 
-    AddUserToDB(payload);   
+    AddUserToDB(payload);
 
 }
 
 
 
 
-const AddUserToDB = async (payload) => {
+const AddUserToDB = (payload) => {
 
 
-     try {
+    fetch(`${BaseURL}/user/register`, {
 
-        let res = await fetch(`${BaseURL}/user/register`, {
+        method: "POST",
 
-            method: "POST",
+        headers: {
+            "Content-type": "application/json"
 
-            headers:{
-                "Content-type": "application/json"
+        },
 
-            },
+        body: JSON.stringify(payload)
 
-            body: JSON.stringify(payload)
+    }).then((res) => res.json())
+        .then((data) => {
 
-        });
-
-        res = await res.json();
-
-        if(res.ok){
+            if (data.ok) {
 
 
-            Swal.fire({
+                Swal.fire({
 
-                title: "Your Account has been created Successfully",
-                icon:'success',
+                    title: "Your Account has been created Successfully",
+                    icon: 'success',
 
-                confirmButtonText: 'Ok'
+                    confirmButtonText: 'Ok'
 
-            }).then((result) => {
+                }).then((result) => {
 
-                if (result.isConfirmed) {
+                    if (result.isConfirmed) {
 
-                    location.href = 'login.html';
-                }
+                        location.href = 'login.html';
+                    }
 
-            })
+                })
 
-        }
-        
-        else{
+            }
 
-            swal.fire('Oops ! Something went wrong. Please enter your details correctly.','','error');
+            else {
 
-        }
-        
-        
-    } 
-    
-    catch (error) {
+                swal.fire('Oops ! Something went wrong. Please enter your details correctly.', '', 'error');
 
-        Swal.fire(error.message, '', 'error')
+            }
 
-    }
+        }).catch((err) => {
+            swal.fire(err, '', 'error');
+        })
+
 
 }
+
