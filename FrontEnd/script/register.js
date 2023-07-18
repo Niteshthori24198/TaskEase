@@ -74,7 +74,7 @@ const AddUserToDB = (payload) => {
 
                     if (result.isConfirmed) {
 
-                        location.href = 'login.html';
+                        location.href = '../view/login.html';
                     }
 
                 })

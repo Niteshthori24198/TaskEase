@@ -22,7 +22,7 @@ const users_token = localStorage.getItem('usertoken') || null;
 
 
 if (!users_token) {
-    location.href = "login.html"
+    location.href = "../view/login.html"
 }
 else {
 

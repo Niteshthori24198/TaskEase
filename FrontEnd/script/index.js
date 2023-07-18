@@ -188,7 +188,7 @@ async function userLogedOutHandle() {
                 if (result.isConfirmed) {
 
                     localStorage.removeItem('usertoken');
-                    location.href = 'login.html'
+                    location.href = '../view/login.html'
                 }
 
             })
