@@ -61,10 +61,9 @@ const AddUserToDB = async (payload) => {
 
         });
 
+        res = await res.json();
+
         if(res.ok){
-
-            res = await res.json();
-
 
 
             Swal.fire({
