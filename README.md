@@ -86,8 +86,8 @@
   # Deployment
 
   - The backend of this project has been deployed using Cyclick, and the front end has been deployed using Netlify.
-     - Netlify :  
-     - BackEnd :  
+     - Website :  https://taskease-niteshthori24198.vercel.app/
+     - BackEnd :  https://task-ease-niteshthori24198.vercel.app
      - Github  :  https://github.com/Niteshthori24198/TaskEase
 
   # License
