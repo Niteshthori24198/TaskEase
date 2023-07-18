@@ -297,7 +297,7 @@ const googleAuthentication = async (req, res) => {
 
     let token = jwt.sign({ UserID: user._id }, process.env.SecretKey, { expiresIn: "24h" })
 
-    const frontendURL = "http://127.0.0.1:5500/FrontEnd/index.html"
+    const frontendURL = "https://taskease-niteshthori24198.vercel.app"
 
     const imgSrc = 'https://cdn.kibrispdr.org/data/1750/3-dot-loading-gif-35.gif'
     const imgSrcAlt = 'https://i.pinimg.com/originals/b8/3e/c9/b83ec9d8ac7a6f2dfaa93fa4f150e3b6.gif'

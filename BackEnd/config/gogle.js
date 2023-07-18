@@ -17,7 +17,7 @@ passport.use(new GoogleStrategy({
 
     clientID: process.env.googleclientid,
     clientSecret: process.env.googleclientsecret,
-    callbackURL: "http://localhost:4040/user/auth/google/callback"
+    callbackURL: "https://task-ease-niteshthori24198.vercel.app/user/auth/google/callback"
 
 },
 
