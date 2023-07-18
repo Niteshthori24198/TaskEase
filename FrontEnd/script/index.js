@@ -1,5 +1,5 @@
 
-const BASEURL = `http://localhost:4040`
+const BASEURL = `https://task-ease-niteshthori24198.vercel.app`
 
 
 let a = new URLSearchParams(window.location.search);

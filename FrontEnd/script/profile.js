@@ -1,5 +1,5 @@
 
-const profile_baseurl = `http://localhost:4040`
+const profile_baseurl = `https://task-ease-niteshthori24198.vercel.app`
 
 
 
