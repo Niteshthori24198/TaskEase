@@ -31,7 +31,8 @@ const UserRegister = async (req, res) => {
 
             return res.status(200).send({
                 "msg": "New User has been Registered Successfully !",
-                "User": user
+                "User": user,
+                "ok":true
             })
 
 
